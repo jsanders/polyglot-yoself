@@ -1,12 +1,12 @@
 CXX = clang++
-CXXFLAGS = -Wall -Werror
+CXXFLAGS = -std=c++11 -Wall -Werror
 
 .SECONDARY:
 
 build:
 	@mkdir build
 
-build/%: %.cpp build
+build/%: %.cc build
 	@$(CXX) $(CXXFLAGS) $< -o $@
 
 run-%: build/%
