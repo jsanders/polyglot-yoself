@@ -1,17 +1,7 @@
 #include <iostream>
-#include <string>
 #include <set>
 #include <vector>
 #include <cmath>
-
-using ::std::ostream;
-using ::std::cout;
-using ::std::endl;
-using ::std::string;
-using ::std::set;
-using ::std::vector;
-using ::std::abs;
-using ::std::sqrt;
 
 struct Point {
   int x;
@@ -20,7 +10,7 @@ struct Point {
 
 // Some useful operations for Points
 
-ostream& operator<< (ostream& os, const Point& p) {
+std::ostream& operator<< (std::ostream& os, const Point& p) {
   os << "(" << p.x << ", " << p.y << ")";
   return os;
 }
@@ -31,27 +21,27 @@ bool operator<(const Point a, const Point b) {
 }
 
 double distance(const Point a, const Point b) {
-  auto xdist = abs(a.x - b.x);
-  auto ydist = abs(a.y - b.y);
-  return sqrt(xdist * xdist + ydist * ydist);  
+  auto xdist = std::abs(a.x - b.x);
+  auto ydist = std::abs(a.y - b.y);
+  return std::sqrt(xdist * xdist + ydist * ydist);  
 }
 
 // Printing stuff
 
 template <typename T>
 void banner(T v) {
-  cout << "----- " << v << " -----" << endl;
+  std::cout << "----- " << v << " -----" << std::endl;
 }
 
 template <typename T>
 void print(T points) {
   for (const auto &p : points) {
-    cout << p << endl;
+    std::cout << p << std::endl;
   }
 }
 
 // Find nearest neighbor in given set
-Point nearest_neighbor(Point point, set<Point> neighbors) {
+Point nearest_neighbor(Point point, std::set<Point> neighbors) {
   auto it = neighbors.begin();
   Point nearest = *it;
   double dist = distance(point, nearest);
@@ -66,8 +56,8 @@ Point nearest_neighbor(Point point, set<Point> neighbors) {
 }
 
 // Find a path using the nearest neighbor heuristic
-vector<Point> nearest_neighbor_heuristic(set<Point> points) {
-  vector<Point> visited;
+std::vector<Point> nearest_neighbor_heuristic(std::set<Point> points) {
+  std::vector<Point> visited;
   Point last;
   Point current = *points.begin();
 
@@ -87,7 +77,7 @@ vector<Point> nearest_neighbor_heuristic(set<Point> points) {
 }
 
 int main() {
-  set<Point> points = { {1,1},{2,3},{3,1},{5,7} };
+  std::set<Point> points = { {1,1},{2,3},{3,1},{5,7} };
   auto solution = nearest_neighbor_heuristic(points);
 
   print(solution);
