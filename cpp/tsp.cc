@@ -1,7 +1,8 @@
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <set>
 #include <vector>
-#include <cmath>
 
 struct Point {
   int x;
@@ -40,31 +41,20 @@ void print(T points) {
   }
 }
 
-// Find nearest neighbor in given set
+// Find element in `points` nearest to `point`.
 Point nearest_neighbor(Point point, std::set<Point> neighbors) {
-  auto it = neighbors.begin();
-  Point nearest = *it;
-  double dist = distance(point, nearest);
-  for (; it != neighbors.end(); ++it) {
-    double _dist = distance(point, *it);
-    if (_dist < dist) {
-      nearest = *it;
-      dist = _dist;
-    }
-  }
-  return nearest;
+  auto compare = [&point] (const Point &a, const Point &b) { return distance(point, a) < distance(point, b); };
+  return *std::min_element(neighbors.begin(), neighbors.end(), compare);
 }
 
 // Find a path using the nearest neighbor heuristic
 std::vector<Point> nearest_neighbor_heuristic(std::set<Point> points) {
   std::vector<Point> visited;
-  Point last;
   Point current = *points.begin();
 
   while(true) {
     visited.push_back(current);
     points.erase(current);
-    last = current;
 
     if (points.size() == 0) {
       break;
