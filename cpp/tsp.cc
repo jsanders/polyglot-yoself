@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <set>
@@ -41,10 +40,27 @@ void print(T points) {
   }
 }
 
+template<class ForwardIt, class Functor>
+ForwardIt min_element_by(ForwardIt first, ForwardIt last, Functor by) {
+  if (first == last) return last;
+
+  ForwardIt smallest = first;
+  auto smallestVal = by(*first);
+  ++first;
+  for (; first != last; ++first) {
+    auto currentVal = by(*first);
+    if (currentVal < smallestVal) {
+      smallest = first;
+      smallestVal = currentVal;
+    }
+  }
+  return smallest;
+}
+
 // Find element in `points` nearest to `point`.
 Point nearest_neighbor(Point point, std::set<Point> neighbors) {
-  auto compare = [&point] (const Point &a, const Point &b) { return distance(point, a) < distance(point, b); };
-  return *std::min_element(neighbors.begin(), neighbors.end(), compare);
+  return *min_element_by(neighbors.begin(), neighbors.end(),
+      [&point] (const Point &p) { return distance(point, p); });
 }
 
 // Find a path using the nearest neighbor heuristic
