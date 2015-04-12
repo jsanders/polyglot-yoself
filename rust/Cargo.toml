@@ -1,0 +1,7 @@
+[package]
+name = "polyglot"
+version = "0.0.1-pre"
+authors = ["James Sanders <sanderjd@gmail.com>"]
+
+[dependencies]
+rand = '*'
