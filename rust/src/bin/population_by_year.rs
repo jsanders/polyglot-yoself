@@ -1,5 +1,10 @@
 // Pretty much a direct port of the C++98 version. Probably lots of room for improvement!
 
+extern crate rand;
+use rand::{thread_rng, Rng};
+
+use std::env;
+
 static FIRST_YEAR: usize = 1900;
 static LAST_YEAR: usize = 2000;
 
@@ -40,11 +45,22 @@ fn find_max(people: Vec<Person>) -> (usize, i32) {
   (max_year, max)
 }
 
-fn main() {
-  let people = vec![
-    Person::new(1901,1903), Person::new(1902,1998), Person::new(1903,1997),
-    Person::new(1904,1996), Person::new(1905,1995)
-  ];
+fn make_people(how_many: usize) -> Vec<Person> {
+  let mut vec = Vec::with_capacity(how_many);
+  let mut rng = thread_rng();
+  for _ in (0..how_many) {
+    let birth_year = rng.gen_range(FIRST_YEAR, LAST_YEAR-1);
+    let death_year = rng.gen_range(birth_year, LAST_YEAR);
+    vec.push(Person::new(birth_year, death_year));
+  }
+  vec
+}
+
+fn main() { 
+  let how_many: usize = env::args()
+    .nth(1).and_then(|n| n.parse().ok())
+    .unwrap_or(1000);
+  let people = make_people(how_many);
 
   let (year, pop) = find_max(people);
   println!("Max of {} in {}", pop, year);
