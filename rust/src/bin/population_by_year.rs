@@ -48,7 +48,7 @@ fn find_max(people: Vec<Person>) -> (usize, i32) {
 fn make_people(how_many: usize) -> Vec<Person> {
   let mut vec = Vec::with_capacity(how_many);
   let mut rng = thread_rng();
-  for _ in (0..how_many) {
+  for _ in 0..how_many {
     let birth_year = rng.gen_range(FIRST_YEAR, LAST_YEAR-1);
     let death_year = rng.gen_range(birth_year, LAST_YEAR);
     vec.push(Person::new(birth_year, death_year));
