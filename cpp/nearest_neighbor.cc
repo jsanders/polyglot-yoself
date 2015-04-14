@@ -1,3 +1,5 @@
+// Nearest neighbor heuristic for the traveling salesman problem
+
 #include <cmath>
 #include <iostream>
 #include <set>
