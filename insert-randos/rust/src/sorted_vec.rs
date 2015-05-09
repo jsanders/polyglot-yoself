@@ -15,12 +15,6 @@ impl<T: PartialOrd> SortedVec<T> {
     }
 }
 
-impl<T: fmt::Debug> fmt::Debug for SortedVec<T> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self.raw)
-    }
-}
-
 impl<T: PartialOrd> iter::FromIterator<T> for SortedVec<T> {
     fn from_iter<I: IntoIterator<Item=T>>(iterable: I) -> SortedVec<T> {
         let iterator = iterable.into_iter();
@@ -30,6 +24,12 @@ impl<T: PartialOrd> iter::FromIterator<T> for SortedVec<T> {
             vec.push(element);
         }
         vec
+    }
+}
+
+impl<T: fmt::Debug> fmt::Debug for SortedVec<T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self.raw)
     }
 }
 
