@@ -6,13 +6,7 @@ pub struct SortedVec {
 
 impl SortedVec {
     fn push(&mut self, val: u8) {
-        let mut index = None;
-        for (_index, element) in self.raw.iter().enumerate() {
-            if val < *element {
-                index = Some(_index);
-                break;
-            }
-        }
+        let index = self.raw.iter().position(|&elem| val < elem);
 
         match index {
             Some(_index) => self.raw.insert(_index, val),
